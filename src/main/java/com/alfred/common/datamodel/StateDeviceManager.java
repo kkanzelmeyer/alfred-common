@@ -65,9 +65,7 @@ public class StateDeviceManager {
      * @param id
      * @param state
      */
-    public static void updateStateDevice(String id, State state) {
-        StateDevice device = deviceList.get(id);
-        device.setState(state);
+    public static void updateStateDevice(String id, StateDevice device) {
         deviceList.replace(id, device);
         notifyUpdateListeners(device.getId(), device);
     }
