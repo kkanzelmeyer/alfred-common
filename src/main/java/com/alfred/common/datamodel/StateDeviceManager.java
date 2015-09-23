@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alfred.common.handlers.StateDeviceHandler;
-import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.State;
 
 /**
  * State Device Manager
@@ -45,7 +44,7 @@ public class StateDeviceManager {
      * Call this method to add a device to the device manager
      * @param device
      */
-    public static void addStateDevice(StateDevice device) {
+    private static void addStateDevice(StateDevice device) {
         deviceList.put(device.getId(), device);
         notifyAddListeners(device.getId(), device);
     }
@@ -66,7 +65,11 @@ public class StateDeviceManager {
      * @param state
      */
     public static void updateStateDevice(String id, StateDevice device) {
-        deviceList.replace(id, device);
+        if(deviceList.containsKey(id)) {
+            deviceList.replace(id, device);
+        } else {
+            addStateDevice(device);
+        }
         notifyUpdateListeners(device.getId(), device);
     }
     
