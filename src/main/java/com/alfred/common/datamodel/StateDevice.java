@@ -1,5 +1,8 @@
 package com.alfred.common.datamodel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage;
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.State;
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.Type;
@@ -21,6 +24,7 @@ public class StateDevice {
     private String _name;
     private State  _state;
     private Type   _type;
+    final private static Logger log = LoggerFactory.getLogger(StateDevice.class);
 
     /**
      * Use the builder to create a new state device
@@ -31,7 +35,7 @@ public class StateDevice {
         _name  = builder.getName();
         _state = builder.getState();
         _type  = builder.getType();
-        System.out.println("Creating new State Device : " + getName());
+        log.info("Creating new device " + this.toString());
     }
     
     /**
@@ -43,6 +47,7 @@ public class StateDevice {
         _name = msg.getName();
         _state = msg.getState();
         _type = msg.getType();
+        log.info("Creating new device " + this.toString());
     }
     
     public String getId() {

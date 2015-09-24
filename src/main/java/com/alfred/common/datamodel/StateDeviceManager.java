@@ -45,6 +45,7 @@ public class StateDeviceManager {
      * @param device
      */
     private static void addStateDevice(StateDevice device) {
+        log.info("Adding new device to Device Manager: " + device.getId());
         deviceList.put(device.getId(), device);
         notifyAddListeners(device.getId(), device);
     }
@@ -54,18 +55,21 @@ public class StateDeviceManager {
      * @param device
      */
     public static void removeStateDevice(StateDevice device) {
+        log.info("Removing device from Device Manager: " + device.getId());
         deviceList.remove(device.getId());
         notifyRemoveListeners(device.getId(), device);
     }
     
     /**
      * Call this method to update the state of a device managed
-     * by the device manager
+     * by the device manager. If the device doesn't currently exist
+     * it will be added
      * @param id
      * @param state
      */
     public static void updateStateDevice(StateDevice device) {
         if(deviceList.containsKey(device.getId())) {
+            log.info("Updating device on Device Manager: " + device.getId());
             deviceList.replace(device.getId(), device);
         } else {
             addStateDevice(device);
