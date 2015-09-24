@@ -67,7 +67,7 @@ public class StateDevice {
     
     @Override
     public String toString() {
-        return    "Device ID: " + _id
+        return    "\nDevice ID: " + _id
                 + "\nDevice Name: " + _name
                 + "\nDevice Type: " + _type
                 + "\nDevice State: " + _state;

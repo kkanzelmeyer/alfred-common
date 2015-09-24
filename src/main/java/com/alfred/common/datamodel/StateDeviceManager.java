@@ -82,10 +82,10 @@ public class StateDeviceManager {
             log.info("Updating device on Device Manager");
             log.info(device.toString());
             deviceList.replace(device.getId(), device);
+            notifyUpdateListeners(device.getId(), device);
         } else {
             addStateDevice(device);
         }
-        notifyUpdateListeners(device.getId(), device);
     }
     
     // - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -125,7 +125,6 @@ public class StateDeviceManager {
      * @param device
      */
     private static void notifyAddListeners(String id, StateDevice device) {
-        log.info("Notifying add listener for device " + device.toString());
         if(deviceHandlers.containsKey(id)) {
             StateDeviceHandler handler = deviceHandlers.get(id);
             handler.onAddDevice(device);
@@ -141,7 +140,6 @@ public class StateDeviceManager {
     }
     
     private static void notifyUpdateListeners(String id, StateDevice device) {
-        log.info("Notifying update listener for device " + device.toString());
         if(deviceHandlers.containsKey(id)) {
             StateDeviceHandler handler = deviceHandlers.get(id);
             handler.onUpdateDevice(device);
