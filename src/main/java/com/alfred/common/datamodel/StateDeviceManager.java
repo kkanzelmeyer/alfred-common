@@ -64,9 +64,9 @@ public class StateDeviceManager {
      * @param id
      * @param state
      */
-    public static void updateStateDevice(String id, StateDevice device) {
-        if(deviceList.containsKey(id)) {
-            deviceList.replace(id, device);
+    public static void updateStateDevice(StateDevice device) {
+        if(deviceList.containsKey(device.getId())) {
+            deviceList.replace(device.getId(), device);
         } else {
             addStateDevice(device);
         }
