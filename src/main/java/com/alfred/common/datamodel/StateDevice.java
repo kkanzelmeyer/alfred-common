@@ -66,6 +66,14 @@ public class StateDevice {
         return this._type;
     }
     
+    public String toString() {
+        return    "Device ID: " + _id
+                + "\nDevice Name: " + _name
+                + "\nDevice Type: " + _type
+                + "\nDevice State: " + _state;
+        
+    }
+    
     public StateDeviceMessage toMessage() {
         return StateDeviceMessage.newBuilder()
                 .setId(_id)
