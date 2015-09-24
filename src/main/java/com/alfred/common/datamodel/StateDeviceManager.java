@@ -53,7 +53,8 @@ public class StateDeviceManager {
      * @param device
      */
     private static void addStateDevice(StateDevice device) {
-        log.info("Adding new device to Device Manager: " + device.getId());
+        log.info("Adding new device to Device Manager");
+        log.info(device.toString());
         deviceList.put(device.getId(), device);
         notifyAddListeners(device.getId(), device);
     }
@@ -63,7 +64,8 @@ public class StateDeviceManager {
      * @param device
      */
     public static void removeStateDevice(StateDevice device) {
-        log.info("Removing device from Device Manager: " + device.getId());
+        log.info("Removing device from Device Manager");
+        log.info(device.toString());
         deviceList.remove(device.getId());
         notifyRemoveListeners(device.getId(), device);
     }
@@ -77,7 +79,8 @@ public class StateDeviceManager {
      */
     public static void updateStateDevice(StateDevice device) {
         if(deviceList.containsKey(device.getId())) {
-            log.info("Updating device on Device Manager: " + device.getId());
+            log.info("Updating device on Device Manager");
+            log.info(device.toString());
             deviceList.replace(device.getId(), device);
         } else {
             addStateDevice(device);

@@ -65,6 +65,7 @@ public class StateDevice {
         return this._type;
     }
     
+    @Override
     public String toString() {
         return    "Device ID: " + _id
                 + "\nDevice Name: " + _name
