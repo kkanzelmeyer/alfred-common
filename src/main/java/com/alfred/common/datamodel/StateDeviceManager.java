@@ -35,6 +35,10 @@ public class StateDeviceManager {
             return deviceList.get(id);
         } else return null;
     }
+    
+    public static HashMap<String, StateDevice> getAllDevices() {
+        return deviceList;
+    }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - 
     // Add, Remove, Update methods for DeviceList
