@@ -1,8 +1,5 @@
 package com.alfred.common.datamodel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage;
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.State;
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.Type;
