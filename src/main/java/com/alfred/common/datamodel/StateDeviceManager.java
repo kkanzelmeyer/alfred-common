@@ -125,6 +125,7 @@ public class StateDeviceManager {
      * @param device
      */
     private static void notifyAddListeners(String id, StateDevice device) {
+        log.info("Notifying add listener for device " + device.toString());
         if(deviceHandlers.containsKey(id)) {
             StateDeviceHandler handler = deviceHandlers.get(id);
             handler.onAddDevice(device);
@@ -140,10 +141,12 @@ public class StateDeviceManager {
     }
     
     private static void notifyUpdateListeners(String id, StateDevice device) {
+        log.info("Notifying update listener for device " + device.toString());
         if(deviceHandlers.containsKey(id)) {
             StateDeviceHandler handler = deviceHandlers.get(id);
             handler.onUpdateDevice(device);
-            
+        } else {
+            log.debug("No listener found for device " + device.toString());
         }
     }
 }
