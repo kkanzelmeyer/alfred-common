@@ -21,7 +21,7 @@ public class StateDeviceManager {
     // List of handlers to maintain in memory
     private static HashMap<String, StateDeviceHandler> deviceHandlers = new HashMap<String, StateDeviceHandler>();
     // Logger
-    final private static Logger logger = LoggerFactory.getLogger(StateDeviceManager.class);
+    final private static Logger log = LoggerFactory.getLogger(StateDeviceManager.class);
     
     
     /**
@@ -83,7 +83,7 @@ public class StateDeviceManager {
      */
     public static void addDeviceHandler(String id, StateDeviceHandler handler) {
         if(!deviceHandlers.containsKey(id)) {
-            logger.info("Adding Handler for device " + id);
+            log.info("Adding Handler for device " + id);
             deviceHandlers.put(id, handler);
         }
     }
@@ -94,7 +94,7 @@ public class StateDeviceManager {
      */
     public static void removeDeviceHandler(String id) {
         if(deviceHandlers.containsKey(id)) {
-            logger.info("Removing Handler for device " + id);
+            log.info("Removing Handler for device " + id);
             deviceHandlers.remove(id);
         }
     }
