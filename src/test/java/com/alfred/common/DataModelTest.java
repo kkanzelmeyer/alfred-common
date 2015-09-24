@@ -1,4 +1,4 @@
-package com.github.kkanzelmeyer.alfred;
+package com.alfred.common;
 
 import static org.junit.Assert.*;
 
