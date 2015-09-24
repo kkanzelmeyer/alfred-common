@@ -36,6 +36,10 @@ public class StateDeviceManager {
         } else return null;
     }
     
+    /**
+     * Method to retrieve all devices
+     * @return
+     */
     public static HashMap<String, StateDevice> getAllDevices() {
         return deviceList;
     }
