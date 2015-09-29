@@ -81,7 +81,7 @@ public class StateDeviceManager {
         if(deviceList.containsKey(device.getId())) {
             log.info("Updating device on Device Manager");
             log.info(device.toString());
-            deviceList.replace(device.getId(), device);
+            deviceList.put(device.getId(), device);
             notifyUpdateListeners(device.getId(), device);
         } else {
             addStateDevice(device);
