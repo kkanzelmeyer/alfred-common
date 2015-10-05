@@ -53,8 +53,6 @@ public class StateDeviceManager {
      * @param device
      */
     private static void addStateDevice(StateDevice device) {
-        log.info("Adding new device to Device Manager");
-        log.info(device.toString());
         deviceList.put(device.getId(), device);
         notifyAddListeners(device.getId(), device);
     }
@@ -64,8 +62,6 @@ public class StateDeviceManager {
      * @param device
      */
     public static void removeStateDevice(StateDevice device) {
-        log.info("Removing device from Device Manager");
-        log.info(device.toString());
         deviceList.remove(device.getId());
         notifyRemoveListeners(device.getId(), device);
     }
@@ -82,8 +78,6 @@ public class StateDeviceManager {
         if(deviceList.containsKey(device.getId())) {
             StateDevice newDevice = getDevice(device.getId());
             if(newDevice.getState() != device.getState()){
-                log.info("Updating device on Device Manager");
-                log.info(device.toString());
                 newDevice.setState(device.getState());
                 deviceList.put(device.getId(), newDevice);
                 notifyUpdateListeners(device.getId(), newDevice);
@@ -106,7 +100,6 @@ public class StateDeviceManager {
      */
     public static void addDeviceHandler(String id, StateDeviceHandler handler) {
         if(!deviceHandlers.containsKey(id)) {
-            log.info("Adding Handler for device " + id);
             deviceHandlers.put(id, handler);
         }
     }
@@ -117,7 +110,6 @@ public class StateDeviceManager {
      */
     public static void removeDeviceHandler(String id) {
         if(deviceHandlers.containsKey(id)) {
-            log.info("Removing Handler for device " + id);
             deviceHandlers.remove(id);
         }
     }
