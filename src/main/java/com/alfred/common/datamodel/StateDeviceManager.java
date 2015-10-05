@@ -80,12 +80,13 @@ public class StateDeviceManager {
      */
     public static void updateStateDevice(StateDevice device) {
         if(deviceList.containsKey(device.getId())) {
-            StateDevice oldDevice = getDevice(device.getId());
-            if(oldDevice.getState() != device.getState()){
+            StateDevice newDevice = getDevice(device.getId());
+            if(newDevice.getState() != device.getState()){
                 log.info("Updating device on Device Manager");
                 log.info(device.toString());
-                deviceList.put(device.getId(), device);
-                notifyUpdateListeners(device.getId(), device);
+                newDevice.setState(device.getState());
+                deviceList.put(device.getId(), newDevice);
+                notifyUpdateListeners(device.getId(), newDevice);
             } else {
                 log.info("No state change, ignoring update");
             }

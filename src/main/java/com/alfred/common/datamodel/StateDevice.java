@@ -39,9 +39,9 @@ public class StateDevice {
      */
     public StateDevice(StateDeviceMessage msg) {
         _id = msg.getId();
-        _name = msg.getName();
         _state = msg.getState();
-        _type = msg.getType();
+        if(msg.hasName()) _name = msg.getName();
+        if(msg.hasType()) _type = msg.getType();
     }
     
     public String getId() {
