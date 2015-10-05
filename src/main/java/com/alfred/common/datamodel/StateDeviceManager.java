@@ -39,6 +39,15 @@ public class StateDeviceManager {
     }
     
     /**
+     * Method to see if the device manager contains a specified device
+     * @param id
+     * @return
+     */
+    public static  boolean contains(String id) {
+        return deviceList.containsKey(id);
+    }
+    
+    /**
      * Method to retrieve all devices
      * @return
      */
