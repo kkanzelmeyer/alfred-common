@@ -73,16 +73,22 @@ public class StateDeviceManager {
     /**
      * Call this method to update the state of a device managed
      * by the device manager. If the device doesn't currently exist
-     * it will be added
+     * it will be added. Note that the state device will only be updated
+     * if the device's state is different
      * @param id
      * @param state
      */
     public static void updateStateDevice(StateDevice device) {
         if(deviceList.containsKey(device.getId())) {
-            log.info("Updating device on Device Manager");
-            log.info(device.toString());
-            deviceList.put(device.getId(), device);
-            notifyUpdateListeners(device.getId(), device);
+            StateDevice oldDevice = getDevice(device.getId());
+            if(oldDevice.getState() != device.getState()){
+                log.info("Updating device on Device Manager");
+                log.info(device.toString());
+                deviceList.put(device.getId(), device);
+                notifyUpdateListeners(device.getId(), device);
+            } else {
+                log.info("No state change, ignoring update");
+            }
         } else {
             addStateDevice(device);
         }
