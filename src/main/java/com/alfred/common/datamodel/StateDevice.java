@@ -34,6 +34,16 @@ public class StateDevice {
     }
     
     /**
+     * Copy constructor
+     */
+    public StateDevice(StateDevice device) {
+        _id    = device.getId();
+        _name  = device.getName();
+        _state = device.getState();
+        _type  = device.getType();
+    }
+    
+    /**
      * This constructor takes a state device protobuf message
      * @param msg
      */
