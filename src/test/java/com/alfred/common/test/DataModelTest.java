@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.alfred.common.datamodel.StateDevice;
 import com.alfred.common.datamodel.StateDeviceManager;
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.State;
+import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.Type;
 
 public class DataModelTest {
 
@@ -19,7 +20,9 @@ public class DataModelTest {
         String name = "State Device 1";
         StateDevice device = new StateDevice.Builder()
                             .setId(id)
+                            .setType(Type.DOORBELL)
                             .setName(name)
+                            .setState(State.INACTIVE)
                             .build();
         
         StateDeviceManager.updateStateDevice(device);
@@ -36,11 +39,12 @@ public class DataModelTest {
      */
     @Test
     public void testUpdateDevice() {
-        String id = "device0001";
+        String id = "device0002";
         String name = "State Device 1";
         StateDevice device = new StateDevice.Builder()
                             .setId(id)
                             .setName(name)
+                            .setType(Type.CEILINGFAN)
                             .setState(State.INACTIVE)
                             .build();
 
@@ -48,8 +52,13 @@ public class DataModelTest {
         StateDeviceManager.updateStateDevice(device);
 
         // Update the device
-        device.setState(State.ACTIVE);
-        StateDeviceManager.updateStateDevice(device);
+        StateDevice updatedDevice = new StateDevice.Builder()
+                .setId(id)
+                .setName(name)
+                .setType(Type.CEILINGFAN)
+                .setState(State.ACTIVE)
+                .build();
+        StateDeviceManager.updateStateDevice(updatedDevice);
 
         StateDevice deviceCopy = StateDeviceManager.getDevice(id);
         if(deviceCopy != null) {
