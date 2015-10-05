@@ -52,13 +52,7 @@ public class DataModelTest {
         StateDeviceManager.updateStateDevice(device);
 
         // Update the device
-        StateDevice updatedDevice = new StateDevice.Builder()
-                .setId(id)
-                .setName(name)
-                .setType(Type.CEILINGFAN)
-                .setState(State.ACTIVE)
-                .build();
-        StateDeviceManager.updateStateDevice(updatedDevice);
+        StateDeviceManager.updateStateDevice(id, State.ACTIVE);
 
         StateDevice deviceCopy = StateDeviceManager.getDevice(id);
         if(deviceCopy != null) {

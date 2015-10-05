@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alfred.common.handlers.StateDeviceHandler;
+import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.State;
 
 /**
  * State Device Manager
@@ -25,14 +26,15 @@ public class StateDeviceManager {
     
     
     /**
-     * Method to retrieve a given device. Returns null if the 
+     * Method to retrieve a clone of a device. Returns null if the 
      * device doesn't exist
      * @param id
      * @return
      */
     public static StateDevice getDevice(String id) {
         if(deviceList.containsKey(id)) {
-            return deviceList.get(id);
+        	StateDevice clone = new StateDevice(deviceList.get(id));
+            return clone;
         } else return null;
     }
     
@@ -52,7 +54,7 @@ public class StateDeviceManager {
      * Call this method to add a device to the device manager
      * @param device
      */
-    private static void addStateDevice(StateDevice device) {
+    public static void addStateDevice(StateDevice device) {
         deviceList.put(device.getId(), device);
         notifyAddListeners(device.getId(), device);
     }
@@ -67,8 +69,7 @@ public class StateDeviceManager {
     }
     
     /**
-     * Call this method to update the state of a device managed
-     * by the device manager. If the device doesn't currently exist
+     * If the device doesn't currently exist
      * it will be added. Note that the state device will only be updated
      * if the device's state is different
      * @param id
@@ -76,16 +77,34 @@ public class StateDeviceManager {
      */
     public static void updateStateDevice(StateDevice device) {
         if(deviceList.containsKey(device.getId())) {
-            StateDevice newDevice = getDevice(device.getId());
-            if(newDevice.getState() != device.getState()){
-                newDevice.setState(device.getState());
-                deviceList.put(device.getId(), newDevice);
-                notifyUpdateListeners(device.getId(), newDevice);
+            StateDevice clone = getDevice(device.getId());
+            if(clone.getState() != device.getState()){
+                clone.setState(device.getState());
+                deviceList.put(device.getId(), clone);
+                notifyUpdateListeners(device.getId(), clone);
             } else {
                 log.info("No state change, ignoring update");
             }
         } else {
-            addStateDevice(device);
+        	addStateDevice(device);
+        }
+    }
+    
+    /**
+     * 
+     * @param id
+     * @param state
+     */
+    public static void updateStateDevice(String id, State state) {
+    	if(deviceList.containsKey(id)) {
+            StateDevice newDevice = getDevice(id);
+            if(newDevice.getState() != state){
+                newDevice.setState(state);
+                deviceList.put(id, newDevice);
+                notifyUpdateListeners(id, newDevice);
+            } else {
+                log.info("No state change, ignoring update");
+            }
         }
     }
 
@@ -139,6 +158,11 @@ public class StateDeviceManager {
         }
     }
     
+    /**
+     * This method notifies the handlers with a copy of the updated object
+     * @param id
+     * @param device
+     */
     private static void notifyUpdateListeners(String id, StateDevice device) {
         if(deviceHandlers.containsKey(id)) {
             StateDeviceHandler handler = deviceHandlers.get(id);
