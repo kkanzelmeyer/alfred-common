@@ -1,5 +1,6 @@
 package com.alfred.common.datamodel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ public class StateDeviceManager {
     // List of devices to maintain in memory
     private static HashMap<String, StateDevice> deviceList = new HashMap<String, StateDevice>();
     // List of handlers to maintain in memory
-    private static HashMap<String, StateDeviceHandler> deviceHandlers = new HashMap<String, StateDeviceHandler>();
+    private static ArrayList<StateDeviceHandler> deviceHandlers = new ArrayList<StateDeviceHandler>();
     // Logger
     final private static Logger log = LoggerFactory.getLogger(StateDeviceManager.class);
     
@@ -65,7 +66,9 @@ public class StateDeviceManager {
      */
     public static void addStateDevice(StateDevice device) {
         deviceList.put(device.getId(), device);
-        notifyAddListeners(device.getId(), device);
+        for(StateDeviceHandler handler : deviceHandlers) {
+            handler.onAddDevice(device);
+        }
     }
     
     /**
@@ -74,7 +77,9 @@ public class StateDeviceManager {
      */
     public static void removeStateDevice(StateDevice device) {
         deviceList.remove(device.getId());
-        notifyRemoveListeners(device.getId(), device);
+        for(StateDeviceHandler handler : deviceHandlers) {
+            handler.onRemoveDevice(device);
+        }
     }
     
     /**
@@ -86,11 +91,14 @@ public class StateDeviceManager {
      */
     public static void updateStateDevice(StateDevice device) {
         if(deviceList.containsKey(device.getId())) {
-            StateDevice clone = getDevice(device.getId());
-            if(clone.getState() != device.getState()){
-                clone.setState(device.getState());
-                deviceList.put(device.getId(), clone);
-                notifyUpdateListeners(device.getId(), clone);
+            StateDevice updateDevice = getDevice(device.getId());
+            if(updateDevice.getState() != device.getState()){
+                updateDevice.setState(device.getState());
+                deviceList.put(device.getId(), updateDevice);
+                // notify handlers
+                for(StateDeviceHandler handler : deviceHandlers) {
+                    handler.onUpdateDevice(updateDevice);
+                }
             } else {
                 log.info("No state change, ignoring update");
             }
@@ -106,11 +114,14 @@ public class StateDeviceManager {
      */
     public static void updateStateDevice(String id, State state) {
     	if(deviceList.containsKey(id)) {
-            StateDevice newDevice = getDevice(id);
-            if(newDevice.getState() != state){
-                newDevice.setState(state);
-                deviceList.put(id, newDevice);
-                notifyUpdateListeners(id, newDevice);
+            StateDevice updateDevice = getDevice(id);
+            if(updateDevice.getState() != state){
+                updateDevice.setState(state);
+                deviceList.put(id, updateDevice);
+             // notify handlers
+                for(StateDeviceHandler handler : deviceHandlers) {
+                    handler.onUpdateDevice(updateDevice);
+                }
             } else {
                 log.info("No state change, ignoring update");
             }
@@ -126,9 +137,9 @@ public class StateDeviceManager {
      * @param id
      * @param handler
      */
-    public static void addDeviceHandler(String id, StateDeviceHandler handler) {
-        if(!deviceHandlers.containsKey(id)) {
-            deviceHandlers.put(id, handler);
+    public static void addDeviceHandler(StateDeviceHandler handler) {
+        if(!deviceHandlers.contains(handler)) {
+            deviceHandlers.add(handler);
         }
     }
     
@@ -136,48 +147,9 @@ public class StateDeviceManager {
      * Call this method to remove a handler for a given device
      * @param id
      */
-    public static void removeDeviceHandler(String id) {
-        if(deviceHandlers.containsKey(id)) {
-            deviceHandlers.remove(id);
-        }
-    }
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    // Notification methods for adding, removing, and updating
-    // a device
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    /**
-     * This method is called internally when a new device is added
-     * to the device manager
-     * @param id
-     * @param device
-     */
-    private static void notifyAddListeners(String id, StateDevice device) {
-        if(deviceHandlers.containsKey(id)) {
-            StateDeviceHandler handler = deviceHandlers.get(id);
-            handler.onAddDevice(device);
-        }
-    }
-    
-    private static void notifyRemoveListeners(String id, StateDevice device) {
-        if(deviceHandlers.containsKey(id)) {
-            StateDeviceHandler handler = deviceHandlers.get(id);
-            handler.onRemoveDevice(device);
-            
-        }
-    }
-    
-    /**
-     * This method notifies the handlers with a copy of the updated object
-     * @param id
-     * @param device
-     */
-    private static void notifyUpdateListeners(String id, StateDevice device) {
-        if(deviceHandlers.containsKey(id)) {
-            StateDeviceHandler handler = deviceHandlers.get(id);
-            handler.onUpdateDevice(device);
-        } else {
-            log.debug("No listener found for device " + device.toString());
+    public static void removeDeviceHandler(StateDeviceHandler handler) {
+        if(deviceHandlers.contains(handler)) {
+            deviceHandlers.remove(handler);
         }
     }
 }
