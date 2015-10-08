@@ -14,13 +14,18 @@ There were two motivating factors behind creating the early version of Alfred:
 
 With these two objectives I went to work designing a system that could send notifications over a home network. As I started developing the framework it became clear that the basic framework could be extended to control other components of the house (garage doors, lights, ceiling fans, etc) because they were all fundamentally the same - an electrical device that can be represented by a state (on, off, open, closed, etc).
 
-Upon this realization I shifted the focus of the project into creating a more scaelable framework. Today the project can be used to control almost any state driven device in a house (assuming you have domain knowledge about connecting electrical devices)
+Then I shifted the focus of the project into creating a more scaelable framework. Today the project can be used to control almost any state driven device in a house (assuming you have domain knowledge about connecting electrical devices)
 
 
 ## Common API
-This project contains the API for project Alfred. Client and server applications can include this API and begin developing applications for interacting with devices around their house
+This project contains the API for project Alfred. Client and server applications can include this API and begin developing applications for interacting with devices around their house.
 
-The API includes templates for devices, like a light, a garage door, a doorbell. It also includes messaging and handler interfaces.
+The common API includes:
+
+- Device interface - the foundation for creating a new device in a server application
+- Device Manager - a singleton class to manage the state of all connected devices
+- Messaging - a Google Protocol Buffer messaging class to easily handle creating, sending, and receiving messages
+
 
 ## API Usage
 
