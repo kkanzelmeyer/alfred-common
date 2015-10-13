@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.alfred.common.test.DataModelTest
--------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.082 sec
-=======
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.095 sec
->>>>>>> branch 'master' of https://github.com/kkanzelmeyer/alfred-common.git
