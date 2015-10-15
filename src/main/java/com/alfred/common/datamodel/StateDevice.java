@@ -1,5 +1,7 @@
 package com.alfred.common.datamodel;
 
+import org.json.JSONObject;
+
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage;
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.State;
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.Type;
@@ -53,6 +55,38 @@ public class StateDevice {
         if(msg.hasName()) _name = msg.getName();
         if(msg.hasType()) _type = msg.getType();
     }
+    
+    /**
+     * Constructor for a JSON Object
+     * @param obj
+     * @throws Exception
+     */
+    public StateDevice(JSONObject obj) throws Exception {
+        if((!obj.has("id")) ||
+           (!obj.has("name")) ||
+           (!obj.has("state")) ||
+           (!obj.has("type"))) throw new IllegalArgumentException("Error: missing field \"id\"");
+        _id = obj.getString("id");
+        _name = obj.getString("name");
+        
+        // type
+        if(obj.get("type").equals("doorbell")) _type = Type.DOORBELL;
+        else if(obj.get("type").equals("garagedoor")) _type = Type.GARAGEDOOR;
+        else if(obj.get("type").equals("light")) _type = Type.LIGHT;
+        else if(obj.get("type").equals("ceilingfan")) _type = Type.CEILINGFAN;
+        else throw new IllegalArgumentException("Error: unknown type");
+        
+        // state
+        if(obj.get("state").equals("on")) _state = State.ON;
+        else if(obj.get("state").equals("off")) _state = State.OFF;
+        else if(obj.get("state").equals("active")) _state = State.ACTIVE;
+        else if(obj.get("state").equals("inactive")) _state = State.INACTIVE;
+        else if(obj.get("state").equals("open")) _state = State.OPEN;
+        else if(obj.get("state").equals("closed")) _state = State.CLOSED;
+        else throw new IllegalArgumentException("Error: unknown state");
+    }
+    
+    
     
     public String getId() {
         return _id;
