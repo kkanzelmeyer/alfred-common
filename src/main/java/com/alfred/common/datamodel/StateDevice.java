@@ -7,7 +7,6 @@ import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.State;
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.Type;
 
 /**
- * State Device
  * 
  * This object is used to represent a device connected to Alfred who's state is
  * of interest to the user; i.e. a light, ceiling fan, electrical outlet
@@ -25,8 +24,9 @@ public class StateDevice {
     private Type   _type;
 
     /**
-     * Use the builder to create a new state device
-     * @param builder
+     * Builder constructor
+     * 
+     * @param builder The builder constructor
      */
     public StateDevice(Builder builder) {
         _id    = builder.getId();
@@ -37,6 +37,9 @@ public class StateDevice {
     
     /**
      * Copy constructor
+     * 
+     * Creates a copy from a reference
+     * 
      */
     public StateDevice(StateDevice device) {
         _id    = device.getId();
@@ -47,7 +50,8 @@ public class StateDevice {
     
     /**
      * This constructor takes a state device protobuf message
-     * @param msg
+     * 
+     * @param msg a StateDeviceMessage protobuf
      */
     public StateDevice(StateDeviceMessage msg) {
         _id = msg.getId();
@@ -58,8 +62,12 @@ public class StateDevice {
     
     /**
      * Constructor for a JSON Object
+     * 
      * @param obj
+     *            JSON Object representation of a state device
      * @throws Exception
+     *             IllegalArgumentException if the JSON State Device input
+     *             doesn't have an "id" field
      */
     public StateDevice(JSONObject obj) throws Exception {
         if((!obj.has("id")) ||
@@ -86,13 +94,11 @@ public class StateDevice {
         else throw new IllegalArgumentException("Error: unknown state");
     }
     
-    
-    
+
     public String getId() {
         return _id;
     }
 
-    
     public String getName() {
         return _name;
     }
@@ -118,6 +124,11 @@ public class StateDevice {
         
     }
     
+    /**
+     * Creates a StateDeviceMessage object from the state device instance
+     * 
+     * @return A StateDeviceMessage object
+     */
     public StateDeviceMessage toMessage() {
         return StateDeviceMessage.newBuilder()
                 .setId(_id)
@@ -127,6 +138,14 @@ public class StateDevice {
                 .build();
     }
 
+    
+    /**
+     * Builder for the StateDevice. This is the only way to create a StateDevice
+     * instance
+     * 
+     * @author kevin
+     *
+     */
     public static class Builder {
         
         private String id;

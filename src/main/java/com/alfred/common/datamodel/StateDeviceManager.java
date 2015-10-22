@@ -10,27 +10,31 @@ import com.alfred.common.handlers.StateDeviceHandler;
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.State;
 
 /**
- * State Device Manager
- * 
  * Used to manage the state devices connected to Alfred
+ * 
  * @author Kevin Kanzelmeyer
  *
  */
 public class StateDeviceManager {
     
-    // List of devices to maintain in memory
+    // List of devices to manage
     private static HashMap<String, StateDevice> deviceList = new HashMap<String, StateDevice>();
-    // List of handlers to maintain in memory
+    
+    // List of handlers to manage
     private static ArrayList<StateDeviceHandler> deviceHandlers = new ArrayList<StateDeviceHandler>();
+    
     // Logger
     final private static Logger log = LoggerFactory.getLogger(StateDeviceManager.class);
     
     
     /**
-     * Method to retrieve a clone of a device. Returns null if the 
-     * device doesn't exist
+     * Method to retrieve a clone of a device. Returns null if the device
+     * doesn't exist
+     * 
      * @param id
-     * @return
+     *            The ID of the desired device
+     * @return an instance of the desired state device. Note that this method
+     *         returns "null" if the desired object doesn't exist
      */
     public static StateDevice getDevice(String id) {
         if(deviceList.containsKey(id)) {
@@ -41,8 +45,10 @@ public class StateDeviceManager {
     
     /**
      * Method to see if the device manager contains a specified device
+     * 
      * @param id
-     * @return
+     *          The ID of the desired device
+     * @return True if the device exists in the Device Manager, False otherwise
      */
     public static  boolean contains(String id) {
         return deviceList.containsKey(id);
@@ -50,7 +56,8 @@ public class StateDeviceManager {
     
     /**
      * Method to retrieve all devices
-     * @return
+     * 
+     * @return A Hashmap of all registered devices in the Device Manager
      */
     public static HashMap<String, StateDevice> getAllDevices() {
         return deviceList;
@@ -61,8 +68,11 @@ public class StateDeviceManager {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - 
     
     /**
-     * Call this method to add a device to the device manager
-     * @param device
+     * This method adds the input device to be managed by the Device Manager. It will
+     * notify all registered StateDeviceHandlers that a new device has been added
+     * 
+     * @param device A StateDevice
+     * 
      */
     public static void addStateDevice(StateDevice device) {
         deviceList.put(device.getId(), device);
@@ -72,8 +82,9 @@ public class StateDeviceManager {
     }
     
     /**
-     * Call this method to remove a device from the device manager
-     * @param device
+     * This method removes a device from the device manager
+     * 
+     * @param device A StateDevice
      */
     public static void removeStateDevice(StateDevice device) {
         deviceList.remove(device.getId());
@@ -83,11 +94,12 @@ public class StateDeviceManager {
     }
     
     /**
-     * If the device doesn't currently exist
-     * it will be added. Note that the state device will only be updated
-     * if the device's state is different
-     * @param id
-     * @param state
+     * Method to update a given state device. Note that if the device doesn't
+     * currently exist it will be added. Also note that the state device will
+     * only be updated if the input device state is different
+     * 
+     * @param device
+     *            an instance of the device to update
      */
     public static void updateStateDevice(StateDevice device) {
         if(deviceList.containsKey(device.getId())) {
@@ -106,11 +118,14 @@ public class StateDeviceManager {
         	addStateDevice(device);
         }
     }
-    
+
     /**
+     * Method to update a given state device. Note that if the device doesn't
+     * currently exist it will be added. Also note that the state device will
+     * only be updated if the input device state is different
      * 
-     * @param id
-     * @param state
+     * @param id The ID of the device to update
+     * @param state The new state
      */
     public static void updateStateDevice(String id, State state) {
     	if(deviceList.containsKey(id)) {
@@ -133,9 +148,9 @@ public class StateDeviceManager {
     // Add, Remove methods for DeviceHandlers
     // - - - - - - - - - - - - - - - - - - - - - - - - - - 
     /**
-     * Call this method to add a handler for a given device
-     * @param id
-     * @param handler
+     * Method to add a StateDeviceHandler to the device manager
+     * 
+     * @param handler An instance of the handler
      */
     public static void addDeviceHandler(StateDeviceHandler handler) {
         if(!deviceHandlers.contains(handler)) {
@@ -144,8 +159,9 @@ public class StateDeviceManager {
     }
     
     /**
-     * Call this method to remove a handler for a given device
-     * @param id
+     * Method to add a StateDeviceHandler to the device manager
+     * 
+     * @param handler An instance of the handler
      */
     public static void removeDeviceHandler(StateDeviceHandler handler) {
         if(deviceHandlers.contains(handler)) {
