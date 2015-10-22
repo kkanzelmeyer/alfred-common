@@ -10,7 +10,23 @@ import com.alfred.common.handlers.StateDeviceHandler;
 import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.State;
 
 /**
- * Used to manage the state devices connected to Alfred
+ * This class is the backbone of the Alfred API. It manages the list of devices
+ * managed by the API client application (like the <a
+ * href="https://github.com/kkanzelmeyer/alfred-server">Alfred Server</a>
+ * project for Raspberry Pi or the <a
+ * href="https://github.com/kkanzelmeyer/alfred-client">Alfred Client</a>
+ * project for Android) This class also manages the list of Device Handlers
+ * registered with the API.
+ * <p>
+ * The core functionality is simple: a device is created and added to this
+ * StateDeviceManager class using the <code>addStateDevice</code> method. The
+ * device can then be accessed at any point in the future by called
+ * <code>getDevice</code> and supplying the device id.
+ * <p>
+ * Handlers are treated identically to devices - they can be added with the
+ * <code>addDeviceHandler</code> method. When a state device is added, removed,
+ * or updated the registered handlers are notified with a reference to the
+ * device.
  * 
  * @author Kevin Kanzelmeyer
  *

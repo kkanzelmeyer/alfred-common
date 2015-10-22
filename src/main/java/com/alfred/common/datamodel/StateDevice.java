@@ -8,10 +8,28 @@ import com.alfred.common.messages.StateDeviceProtos.StateDeviceMessage.Type;
 
 /**
  * 
- * This object is used to represent a device connected to Alfred who's state is
- * of interest to the user; i.e. a light, ceiling fan, electrical outlet
- * (on/off), a garage door (open/closed), a doorbell (active, inactive), a
- * window sensor, etc.
+ * This class is used to represent a device connected to Alfred.
+ * <p>
+ * The term "State Device" is used because the class is instantiated for
+ * electrical devices (Light, Ceiling Fan, Garage Door, Doorbell) that can be
+ * represented by a state (On, Off, Active, Inactive, Open, Closed, etc).
+ * <p>
+ * For example, the <a
+ * href="https://github.com/kkanzelmeyer/alfred-server">Alfred Server</a>
+ * project for Raspberry Pi can have sensors and switches connected to it. You
+ * could connect a relay to a lamp and to the Raspberry Pi. Using the Alfred
+ * Server project you could create a StateDevice to represent the lamp, and then
+ * let the Pi control it using some control method.
+ * <p>
+ * It is worth noting that the <a
+ * href="https://github.com/kkanzelmeyer/alfred-server">Alfred Server</a>
+ * project for Raspberry Pi has pre-made plugins to handle devices like lamps,
+ * lights ceiling fans, garage doors, and doorbells. If you have a Pi you can
+ * download the source code and start using it without changing any source code.
+ * There is also an <a
+ * href="https://github.com/kkanzelmeyer/alfred-client">Alfred Client</a>
+ * project for Android with gives the user control over devices connected to the
+ * Pi using an Android device.
  * 
  * @author Kevin Kanzelmeyer
  *
@@ -143,7 +161,7 @@ public class StateDevice {
      * Builder for the StateDevice. This is the only way to create a StateDevice
      * instance
      * 
-     * @author kevin
+     * @author Kevin Kanzelmeyer
      *
      */
     public static class Builder {

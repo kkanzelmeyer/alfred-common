@@ -5,16 +5,17 @@ import com.alfred.common.datamodel.StateDevice;
 /**
  * 
  * This interface should be implemented by a class which needs to be notified
- * when a device is added, updated, or removed. For example, if you are writing
- * a client application and you need to update a User Interface based on the
- * state of a device you could have a class that implements this interface. Then
- * you can define custom behavior for each method
+ * when a device is added, updated, or removed.
+ * <p>
+ * For example, if you are writing a client application and you need to update a
+ * User Interface based on the state of a device you could have a class that
+ * implements this interface. Then you can define custom behavior for each
+ * method
  * 
  * @author Kevin Kanzelmeyer
  *
  */
 public interface StateDeviceHandler {
-    
     
     /**
      * Called when a new device is added to the StateDeviceManager
